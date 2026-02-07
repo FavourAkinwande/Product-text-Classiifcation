@@ -16,6 +16,7 @@ import os
 import re
 from dataclasses import asdict, dataclass
 from datetime import datetime
+from pathlib import Path
 from typing import Any, Dict, Tuple
 
 import numpy as np
@@ -28,7 +29,10 @@ from sklearn.preprocessing import LabelEncoder
 # Configuration
 # =========================
 
-DATA_PATH = "../data/titles_to_categories.csv"
+# Paths relative to project root (work when run as python src/preprocessing.py from root)
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+DATA_PATH = str(_PROJECT_ROOT / "data" / "titles_to_categories.csv")
+RESULTS_DIR = str(_PROJECT_ROOT / "results")
 
 # Use existing dataset column names from the EDA notebook
 TEXT_COL = "title"
@@ -39,8 +43,6 @@ NROWS: int | None = 500_000
 
 TEST_SIZE: float = 0.2
 RANDOM_SEED: int = 42
-
-RESULTS_DIR = "../results"
 
 # Optional: threshold for "rare" classes, used only for reporting
 RARE_CLASS_THRESHOLD: int = 20
