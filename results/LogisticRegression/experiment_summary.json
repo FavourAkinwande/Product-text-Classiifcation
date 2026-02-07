@@ -1,0 +1,36 @@
+{
+  "experiment_date": "2026-02-07 18:42:15",
+  "model_type": "Logistic Regression",
+  "dataset": {
+    "train_samples": 399997,
+    "test_samples": 100000,
+    "num_classes": 63
+  },
+  "results": {
+    "tfidf": {
+      "accuracy": 0.8665,
+      "macro_f1": 0.8357651307923011,
+      "weighted_f1": 0.8662340517877327
+    },
+    "skipgram": {
+      "accuracy": 0.82114,
+      "macro_f1": 0.7659093703229681,
+      "weighted_f1": 0.8220306820044275
+    },
+    "cbow": {
+      "accuracy": 0.80898,
+      "macro_f1": 0.747160196599027,
+      "weighted_f1": 0.8103988453308604
+    },
+    "fasttext": {
+      "accuracy": 0.79689,
+      "macro_f1": 0.7335848757255345,
+      "weighted_f1": 0.7986962045152389
+    }
+  },
+  "best_embedding": {
+    "by_accuracy": "TF-IDF",
+    "by_macro_f1": "TF-IDF",
+    "by_weighted_f1": "TF-IDF"
+  }
+}
