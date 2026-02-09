@@ -753,18 +753,87 @@ def plot_training_curves_png(embedding_results: list[dict]) -> None:
     print(f"Saved {path}")
 
 
+def _plot_model_comparison_from_csv() -> bool:
+    """
+    Helper to plot model comparison using model_comparison_results.csv if present.
+
+    Produces three horizontally-arranged subplots (Accuracy, Macro F1, Weighted F1)
+    with a distinct colour scheme and titles, to visually differentiate this RNN
+    figure from the Logistic Regression plots.
+    """
+    csv_path = RESULTS_DIR / "RNN" / "model_comparison_results.csv"
+    if not csv_path.exists():
+        return False
+
+    df = pd.read_csv(csv_path)
+    names = df["Embedding"].tolist()
+    accs = df["Accuracy"].tolist()
+    macro_f1 = df["Macro_F1"].tolist()
+    weighted_f1 = df["Weighted_F1"].tolist()
+
+    x = np.arange(len(names))
+
+    fig, axes = plt.subplots(1, 3, figsize=(15, 4), sharey=True)
+
+    # Use a different colour palette from Logistic Regression plots
+    colors = {
+        "accuracy": "#2a9d8f",      # teal
+        "macro_f1": "#e9c46a",      # gold
+        "weighted_f1": "#9d4edd",   # violet
+    }
+
+    def _bar_with_labels(ax, values, color, title):
+        bars = ax.bar(x, values, color=color, alpha=0.9)
+        ax.set_xticks(x)
+        ax.set_xticklabels(names, rotation=20, ha="right")
+        ax.set_title(title)
+        ax.set_ylim(0.0, 1.0)
+        ax.grid(axis="y", alpha=0.25)
+        for bar, val in zip(bars, values):
+            ax.text(
+                bar.get_x() + bar.get_width() / 2,
+                bar.get_height() + 0.01,
+                f"{val:.3f}",
+                ha="center",
+                va="bottom",
+                fontsize=8,
+            )
+
+    _bar_with_labels(axes[0], accs, colors["accuracy"], "RNN Test Accuracy")
+    _bar_with_labels(axes[1], macro_f1, colors["macro_f1"], "RNN Macro F1")
+    _bar_with_labels(axes[2], weighted_f1, colors["weighted_f1"], "RNN Weighted F1")
+
+    fig.suptitle("RNN Performance Across Embeddings", y=1.05)
+    fig.tight_layout()
+    out_path = RESULTS_DIR / "RNN" / "visual" / "model_comparison.png"
+    fig.savefig(out_path, dpi=150, bbox_inches="tight")
+    plt.close(fig)
+    print(f"Saved {out_path}")
+    return True
+
+
 def plot_model_comparison_png(embedding_results: list[dict]) -> None:
-    """Save model comparison bar chart: model_comparison.png (test accuracy & macro F1)."""
+    """
+    Save model comparison bar chart: model_comparison.png.
+
+    Prefer using model_comparison_results.csv (which also contains Weighted_F1)
+    to build three distinct subplots. If the CSV is missing, fall back to a
+    simpler two-metric grouped bar chart based on embedding_results.
+    """
+    if _plot_model_comparison_from_csv():
+        return
+
+    # Fallback: original grouped bar chart using accuracy and macro F1 only.
     names = [_embedding_display_name(r["embedding"]) for r in embedding_results]
     accs = [r["test_accuracy"] for r in embedding_results]
     f1s = [r["test_macro_f1"] for r in embedding_results]
     x = np.arange(len(names))
     width = 0.35
     fig, ax = plt.subplots(figsize=(8, 5))
-    bars1 = ax.bar(x - width / 2, accs, width, label="Test Accuracy")
-    bars2 = ax.bar(x + width / 2, f1s, width, label="Test Macro F1")
+    ax.bar(x - width / 2, accs, width, label="Test Accuracy", color="#264653")
+    ax.bar(x + width / 2, f1s, width, label="Test Macro F1", color="#f4a261")
     ax.set_ylabel("Score")
-    ax.set_title("Model comparison (best config per embedding)")
+    ax.set_title("RNN comparison (best config per embedding)")
     ax.set_xticks(x)
     ax.set_xticklabels(names)
     ax.legend()
@@ -918,36 +987,8 @@ def regenerate_missing_plots():
         with open(indices_path, "w", encoding="utf-8") as f:
             json.dump({"embedding": emb, "top30_class_indices": top_idx_list}, f, indent=2)
         print(f"Saved {indices_path}")
-    # model_comparison.png from test_evaluation_results.json
-    jeval = _get_test_results_path()
-    if jeval.exists():
-        with open(jeval, encoding="utf-8") as f:
-            data = json.load(f)
-        names = []
-        accs = []
-        f1s = []
-        for ex in data.get("experiments", []):
-            names.append(ex.get("embedding_label", ex.get("embedding", "")))
-            accs.append(float(ex.get("accuracy", 0)))
-            f1s.append(float(ex.get("macro_f1", 0)))
-        if names:
-            x = np.arange(len(names))
-            width = 0.35
-            fig, ax = plt.subplots(figsize=(8, 5))
-            ax.bar(x - width / 2, accs, width, label="Test Accuracy")
-            ax.bar(x + width / 2, f1s, width, label="Test Macro F1")
-            ax.set_ylabel("Score")
-            ax.set_title("Model comparison (best config per embedding)")
-            ax.set_xticks(x)
-            ax.set_xticklabels(names)
-            ax.legend()
-            ax.set_ylim(0, 1.0)
-            ax.grid(True, axis="y", alpha=0.3)
-            fig.tight_layout()
-            path = RESULTS_DIR / "model_comparison.png"
-            fig.savefig(path, dpi=150, bbox_inches="tight")
-            plt.close(fig)
-            print(f"Saved {path}")
+    # model_comparison.png from model_comparison_results.csv if available
+    _plot_model_comparison_from_csv()
     print("Done. Training history/curves PNGs need a full run.")
 
 
