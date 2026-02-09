@@ -1,4 +1,17 @@
+# Results splits (preprocessed train/test)
+results/train.csv
+results/test.csv
 
+# Large model files
+*.pkl
+
+# Large data files (raw)
+data/
+*.csv
+!results/label_mapping.csv
+!results/EDA/label_mapping.csv
+!results/GRU/model_comparison_results.csv
+!results/LogisticRegression/model_comparison_results.csv
 
 # Selected generated results to ignore (from results root only)
 results/confusion_matrix_*.csv
@@ -7,6 +20,11 @@ results/confusion_matrix_top30_indices_*.json
 results/w2v_*.model
 results/w2v_*.model_meta.json
 results/preprocessing_metadata.json
+
+# OS / editor artifacts
+.DS_Store
+results/.DS_Store
+notebook/.ipynb_checkpoints/
 
 # Local virtual environment
 .venv/

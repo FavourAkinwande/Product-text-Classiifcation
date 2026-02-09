@@ -1,0 +1,69 @@
+                                   precision    recall  f1-score   support
+
+            Arts  Crafts Supplies     0.9154    0.9416    0.9283      1884
+Audio/Video Receivers  Amplifiers     0.6845    0.8058    0.7402       937
+         Automotive Tires  Wheels     0.9525    0.9550    0.9538      1890
+      Automotive Tools  Equipment     1.0000    0.4286    0.6000         7
+               Baby  Toddler Toys     0.8411    0.8878    0.8638      1061
+                       Bath  Body     0.8484    0.8749    0.8614      3436
+                Bathroom Hardware     0.8723    0.8773    0.8748      1728
+                           Beauty     0.7505    0.5701    0.6480      3736
+        Beauty Tools  Accessories     0.8321    0.9154    0.8718      3264
+                          Bedding     1.0000    0.3333    0.5000         3
+      Building  Construction Toys     0.9665    0.9494    0.9579      1856
+                Building Supplies     0.8204    0.8632    0.8412      1593
+              Computer Components     0.9512    0.9482    0.9497      1893
+                    Cutting Tools     0.6783    0.8864    0.7685        88
+                     Data Storage     0.9762    0.9663    0.9712      1869
+            Digital Media Devices     0.9070    0.9468    0.9265       752
+             Dishwashing Supplies     0.9429    0.9592    0.9510      1789
+             Door Hardware  Locks     0.7456    0.8910    0.8118      1615
+                      Electronics     0.9378    0.9338    0.9358      2810
+                      Flashlights     0.8337    0.9442    0.8855      1864
+     Fresh Flowers  Indoor Plants     0.9534    0.9555    0.9544      1798
+               Furniture Hardware     0.8674    0.9433    0.9038      1782
+                    Gate Hardware     0.9158    0.9042    0.9100      1733
+                       Hand Tools     0.8762    0.8645    0.8703      1638
+               Handmade Jewellery     0.9849    0.9895    0.9872      3439
+                         Hardware     0.6901    0.3815    0.4913      1337
+                   Hardware Hooks     0.8805    0.9389    0.9087      1734
+             Home Theatre Systems     0.6547    0.4677    0.5456       742
+               Household Cleaning     0.8845    0.8954    0.8899      1855
+         Household Cleaning Tools     0.8615    0.8805    0.8709      1682
+           Industrial  Scientific     0.6677    0.3117    0.4250       677
+                Job Site Lighting     0.7298    0.3939    0.5117       528
+        Kitchen Utensils  Gadgets     0.9230    0.8577    0.8892      1258
+             Kites  Wind Spinners     0.9910    0.9847    0.9878      1114
+                          Ladders     0.9471    0.9430    0.9450      1404
+                 Laundry Supplies     0.9357    0.9477    0.9417      1014
+                     Locks  Hasps     0.9070    0.9442    0.9252      1756
+           Mailboxes  Accessories     0.9772    0.9724    0.9748      1849
+                           Makeup     0.6647    0.7778    0.7168       882
+     Material Transport Equipment     0.9542    0.9360    0.9450      1626
+                      Men's Shoes     0.9510    0.9348    0.9428      3465
+    Motorcycle Accessories  Parts     0.9097    0.9333    0.9213      1888
+         Nails, Screws  Fasteners     0.9046    0.8780    0.8911      1598
+                    Outdoor Décor     0.9333    0.9287    0.9310       603
+                 Perfume  Cologne     0.9681    0.9449    0.9564      2122
+  Play Sets  Playground Equipment     0.9380    0.9732    0.9553       373
+        Pogo Sticks  Hopping Toys     0.9123    0.7939    0.8490       131
+            RV Parts  Accessories     0.8660    0.8956    0.8806       498
+             Salon  Spa Equipment     0.9272    0.9534    0.9401      3044
+            Sandboxes  Beach Toys     0.8625    0.8101    0.8355      1448
+   Satellite Television Equipment     0.9226    0.9404    0.9314      1293
+            Scaffolding Equipment     0.7928    0.7243    0.7570       243
+   Shaving  Hair Removal Products     0.8984    0.9519    0.9244      3428
+               Skin Care Products     0.7232    0.7092    0.7161      1647
+Swimming Pool  Outdoor Water Toys     0.8372    0.8843    0.8601      1849
+                   TV Accessories     0.0000    0.0000    0.0000       326
+                        Tableware     0.8515    0.9573    0.9013      1078
+               Tattooing Supplies     0.9580    0.9830    0.9703      1995
+                      Televisions     0.9907    0.9722    0.9814      1652
+               Televisions  Video     0.7231    0.8944    0.7997      1723
+                  Window Hardware     0.9211    0.9440    0.9324      1731
+              Women's Accessories     0.8726    0.8588    0.8656       694
+                    Women's Shoes     0.9341    0.9550    0.9444      3248
+
+                         accuracy                         0.8883    100000
+                        macro avg     0.8622    0.8411    0.8432    100000
+                     weighted avg     0.8837    0.8883    0.8834    100000
