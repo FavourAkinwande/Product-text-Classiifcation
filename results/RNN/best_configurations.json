@@ -1,0 +1,23 @@
+{
+  "timestamp_utc": "2026-02-08T20:01:22Z",
+  "configurations": {
+    "tfidf_svd": {
+      "rnn_units": 128,
+      "dropout": 0.3,
+      "learning_rate": 0.001,
+      "batch_size": 512
+    },
+    "word2vec_skipgram": {
+      "rnn_units": 128,
+      "dropout": 0.3,
+      "learning_rate": 0.0005,
+      "batch_size": 512
+    },
+    "word2vec_cbow": {
+      "rnn_units": 128,
+      "dropout": 0.3,
+      "learning_rate": 0.0005,
+      "batch_size": 512
+    }
+  }
+}

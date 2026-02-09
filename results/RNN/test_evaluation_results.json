@@ -1,0 +1,59 @@
+{
+  "timestamp_utc": "2026-02-08T20:01:22Z",
+  "experiments": [
+    {
+      "embedding": "tfidf_svd",
+      "embedding_label": "TF-IDF",
+      "accuracy": 0.73232,
+      "macro_f1": 0.6257200901332479,
+      "weighted_f1": 0.7205782238311773,
+      "best_config": {
+        "embedding": "tfidf_svd",
+        "config_id": 4,
+        "rnn_units": 128,
+        "dropout": 0.3,
+        "learning_rate": 0.001,
+        "batch_size": 512,
+        "val_macro_f1": 0.6289586483627603,
+        "timestamp_utc": "2026-02-08T17:00:05Z"
+      },
+      "confusion_matrix_csv": "confusion_matrix_tfidf_svd.csv"
+    },
+    {
+      "embedding": "word2vec_skipgram",
+      "embedding_label": "Skip-gram",
+      "accuracy": 0.81417,
+      "macro_f1": 0.7249203597726493,
+      "weighted_f1": 0.8046432409717597,
+      "best_config": {
+        "embedding": "word2vec_skipgram",
+        "config_id": 2,
+        "rnn_units": 128,
+        "dropout": 0.3,
+        "learning_rate": 0.0005,
+        "batch_size": 512,
+        "val_macro_f1": 0.7293176284842503,
+        "timestamp_utc": "2026-02-08T17:39:39Z"
+      },
+      "confusion_matrix_csv": "confusion_matrix_word2vec_skipgram.csv"
+    },
+    {
+      "embedding": "word2vec_cbow",
+      "embedding_label": "CBOW",
+      "accuracy": 0.78356,
+      "macro_f1": 0.6874095344294452,
+      "weighted_f1": 0.7731118059595691,
+      "best_config": {
+        "embedding": "word2vec_cbow",
+        "config_id": 2,
+        "rnn_units": 128,
+        "dropout": 0.3,
+        "learning_rate": 0.0005,
+        "batch_size": 512,
+        "val_macro_f1": 0.6904284411854595,
+        "timestamp_utc": "2026-02-08T19:25:18Z"
+      },
+      "confusion_matrix_csv": "confusion_matrix_word2vec_cbow.csv"
+    }
+  ]
+}
