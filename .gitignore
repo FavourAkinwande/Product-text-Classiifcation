@@ -10,7 +10,6 @@ data/
 *.csv
 !results/label_mapping.csv
 !results/EDA/label_mapping.csv
-!results/LogisticRegression/model_comparison_results.csv
 
 # Selected generated results to ignore (from results root only)
 results/confusion_matrix_*.csv
