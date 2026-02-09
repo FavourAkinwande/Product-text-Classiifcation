@@ -1,12 +1,9 @@
 ## Comparative Analysis of Text Classification with Multiple Embeddings
 
-This repository contains the implementation for a **group assignment** on:
+This project presents a comparative study of text classification using multiple word embedding techniques and machine learning models. The dataset used consists of product titles for category classification, where the goal is to automatically assign each title to its correct product class.
 
-> **Comparative Analysis of Text Classification with Multiple Embeddings**
-
-We perform text classification on **Amazon product titles** into product categories and systematically compare **multiple model architectures** and **multiple word embedding techniques**. Each team member owns one model family and evaluates it across several embeddings, all built on top of a **shared preprocessing pipeline** and a common experimental protocol.
-
-The code and results in this repo support a **research‑style PDF report** with clear, reproducible experiments, comparison tables, visualizations, and research‑backed analysis.
+Each team member investigates one model architecture and trains it using different embedding approaches such as TF-IDF and Word2Vec (CBOW and Skip-gram). The project evaluates how embedding choice affects classification performance through systematic experiments and standard metrics.
+Overall, the study highlights key differences between embedding–model combinations while emphasizing reproducible experimentation and data-driven evaluation of text classification methods.
 
 ---
 
@@ -31,14 +28,12 @@ In line with the assignment guideline (one classical model + sequence models), t
   - **RNN** (simple recurrent network, called `RNN` in code)
   - **GRU** (implemented in the GRU notebook)
 
-Each model is evaluated with multiple embeddings from the assignment’s list:
+Each model is evaluated with multiple embeddings :
 
 - **TF‑IDF**
 - **Word2Vec Skip‑gram**
 - **Word2Vec CBOW**
 - **FastText‑style averaged word embeddings** (for Logistic Regression)
-
-> The PDF report (outside this repo) contains the **contribution tracker** and clearly states which team member implemented which model and sections.
 
 ---
 
@@ -288,15 +283,6 @@ Key comparison files used in the report:
     - `results/GRU/visual_graphs/`
     - `results/LogisticRegression/visual_graphs/`
 
-The **PDF report** (not part of this repo) uses these artifacts to:
-
-- Build at least **two comparison tables** across models and embeddings.
-- Include **visual comparisons** (confusion matrices, training curves, model comparison plots).
-- Provide **deep analysis** explaining:
-  - Why some embeddings work better for RNN/GRU than for Logistic Regression.
-  - How embedding dimensionality, context windows, and training objectives impact results.
-  - Limitations (e.g. class imbalance, short titles) and directions for future work.
-
 ---
 
 ## Requirements & Reproducibility
@@ -319,133 +305,3 @@ Reproducibility measures:
 - Clear separation between preprocessing and model‑specific scripts.
 
 ---
-
-## Alignment with Assignment Rubric
-
-| Rubric item | How this repo/report addresses it |
-|-------------|-----------------------------------|
-| **Problem Definition & Dataset Justification** | The README and report introduction clearly define product title classification and justify the Amazon dataset as a realistic multi‑class text classification problem. |
-| **Dataset Exploration, Preprocessing & Embedding Strategy** | EDA notebook plus `preprocessing.py` define a shared pipeline. Embedding‑specific adaptations (TF‑IDF, Skip‑gram, CBOW, FastText‑style) are implemented and described here and in the report. |
-| **Model Implementation & Experimental Design** | Each model family (Logistic Regression, RNN, GRU) is implemented separately and evaluated with ≥3 embeddings, with clear hyperparameter tuning and training strategies. |
-| **Experiment Tables (≥2)** | `results/RNN/hyperparameter_runs.csv` and the three `model_comparison_results.csv` files provide the basis for the required experiment tables. |
-| **Results & Comparative Discussion** | Accuracy, macro/weighted F1, and confusion matrices are computed for all runs. The report uses these for detailed model‑embedding comparisons and literature‑backed discussion. |
-| **Code Quality & GitHub Repository** | Code is modular (shared preprocessing + model‑specific experiments). This README explains structure, how to run code, and where to find results. |
-| **Academic Writing, Citations & Originality** | The accompanying PDF report follows an academic structure (intro, literature review, methods, results, discussion, conclusion, references) with proper citations and a group contribution tracker. |
-| **Individual Technical Contribution** | Each student independently implements one model family and evaluates it with ≥3 embeddings; their work is unified here through the shared dataset, preprocessing, and comparative analysis. |
-
-# Product Text Classification
-
-Text classification of Amazon product titles into categories using an **RNN (simple recurrent network)** with three word embedding techniques: **TF-IDF + SVD**, **Word2Vec Skip-gram**, and **Word2Vec CBOW**. This repository contains the shared preprocessing pipeline and the RNN + embeddings experiments (hyperparameter tuning and evaluation).
-
-## Dataset
-
-- **Source:** Amazon product titles → category (e.g. `data/titles_to_categories.csv`).
-- **Task:** Predict product category from title text only.
-- **Split:** Stratified train/test (configurable in preprocessing); experiments further split train into train/validation for tuning.
-
-## Repository Structure
-
-```
-Product-text-Classiifcation/
-├── data/                           # Raw data (titles_to_categories.csv)
-├── results/                        # Outputs (created by scripts)
-│   ├── train.csv, test.csv         # Preprocessed splits
-│   ├── label_mapping.csv
-│   ├── preprocessing_metadata.json
-│   ├── hyperparameter_runs.csv     # All tuning runs (embedding, rnn_units, dropout, lr, batch_size, val_macro_f1)
-│   ├── test_evaluation_results.json# Best config + accuracy, macro_f1, weighted_f1 per embedding
-│   ├── model_comparison_results.csv# Table: Model, Embedding, Accuracy, Macro_F1, Weighted_F1 (3 rows)
-│   ├── best_configurations.json    # Best hyperparameters per embedding
-│   ├── model_tfidf.keras, model_skipgram.keras, model_cbow.keras  # Saved best models
-│   ├── confusion_matrix_*.csv     # Raw confusion matrix per embedding
-│   ├── classification_report_*.txt# Precision/recall/F1 (macro + weighted avg) per embedding
-│   └── *.png                       # Heatmaps, training history, model_comparison.png
-├── notebook/
-│   └── eda.ipynb                   # Exploratory data analysis
-├── src/
-│   ├── preprocessing.py            # Shared preprocessing pipeline
-│   └── experiments.py              # RNN × TF-IDF / Skip-gram / CBOW experiments
-├── requirements.txt
-└── README.md
-```
-
-## Preprocessing
-
-- **Script:** `src/preprocessing.py`
-- **Steps:** Load raw data → clean text (lowercase, remove punctuation, keep numbers) → label encoding → stratified train/test split → save CSVs and metadata.
-- **Outputs:** `results/train.csv`, `results/test.csv`, `results/label_mapping.csv`, `results/preprocessing_metadata.json`
-
-Preprocessing is **adapted per embedding** in `experiments.py`:
-- **TF-IDF:** Uses shared `clean_text`; no tokenization; bag-of-ngrams (1,2) with SVD reduction.
-- **Skip-gram / CBOW:** Same `clean_text`, then tokenized into word sequences for Word2Vec; fixed `max_len=30` for sequences.
-
-## Model and Embeddings
-
-- **Model:** RNN implemented as a **simple recurrent network** (Keras/TensorFlow).
-- **Embeddings (three):**
-  1. **TF-IDF + SVD** — max_features=100000, ngram_range=(1,2), SVD components=300.
-  2. **Word2Vec Skip-gram** — vector_size=200, window=5, min_count=2, max_len=30.
-  3. **Word2Vec CBOW** — same Word2Vec hyperparameters, training mode CBOW (sg=0).
-
-For each embedding, the same RNN architecture is used; only **RNN units**, **dropout**, **learning rate**, and **batch size** are tuned.
-
-## How to Run
-
-### 1. Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 2. Run preprocessing (required first)
-
-From the project root:
-
-```bash
-python src/preprocessing.py
-```
-
-This creates `results/train.csv` and `results/test.csv` (and other metadata). Adjust `DATA_PATH`, `NROWS`, and `TEST_SIZE` in `preprocessing.py` if needed.
-
-### 3. Run experiments (RNN × 3 embeddings)
-
-```bash
-python src/experiments.py
-```
-
-This will:
-- For **each** embedding (TF-IDF+SVD, Skip-gram, CBOW): run 12 hyperparameter configurations, select the best by **validation MACRO-F1**, then evaluate **once** on the held-out test set.
-- Log every run to `results/hyperparameter_runs.csv`.
-- Save best config and test metrics to `results/test_evaluation_results.json`.
-- Save a **confusion matrix** per embedding to `results/confusion_matrix_<embedding>.csv`.
-
-## Results and Evaluation
-
-- **hyperparameter_runs.csv:** All runs (embedding, config_id, rnn_units, dropout, learning_rate, batch_size, val_macro_f1, timestamp_utc).
-- **test_evaluation_results.json:** For each embedding, the best hyperparameter config and **test accuracy** and **test MACRO-F1**.
-- **confusion_matrix_*.csv:** Confusion matrix for the best model per embedding (for report tables/figures).
-
-Evaluation metrics used: **accuracy**, **macro F1**, and **confusion matrix**.
-
-## Requirements
-
-- Python 3.10+
-- See `requirements.txt`: TensorFlow, scikit-learn, pandas, numpy, gensim, matplotlib, seaborn.
-
----
-
-## Project requirements compliance (assignment rubric)
-
-| Requirement | Status |
-|-------------|--------|
-| **One model, ≥3 embeddings** | ✓ RNN (simple RNN) with TF-IDF+SVD, Word2Vec Skip-gram, Word2Vec CBOW |
-| **Shared preprocessing** | ✓ `preprocessing.py`: load, clean text, encode labels, stratified train/test |
-| **Preprocessing adapted per embedding** | ✓ Documented in code and README: TF-IDF (bag-of-ngrams); Skip-gram/CBOW (tokenized sequences, max_len=30) |
-| **Hyperparameter tuning** | ✓ 12 configs per embedding (RNN units, dropout, lr, batch size); best by validation MACRO-F1 |
-| **Early stopping, restore best weights** | ✓ Keras EarlyStopping with `restore_best_weights=True` |
-| **Experiment tables (≥2)** | ✓ `hyperparameter_runs.csv`, `model_comparison_results.csv`; JSON/confusion CSVs support more tables |
-| **Evaluation metrics** | ✓ Accuracy, macro F1, weighted F1, confusion matrix, classification reports (macro + weighted avg) |
-| **Visual comparisons** | ✓ Confusion matrix heatmaps (TF-IDF / Skip-gram / CBOW), training history, training_curves.png, model_comparison.png |
-| **Saved models** | ✓ `model_tfidf.keras`, `model_skipgram.keras`, `model_cbow.keras` |
-| **Code structure** | ✓ Modular: separate `build_*` per embedding; docstrings; run from project root |
-| **README** | ✓ Dataset, structure, preprocessing, model, embeddings, how to run, results, requirements |
