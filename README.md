@@ -25,8 +25,9 @@ In line with the assignment guideline (one classical model + sequence models), t
 - **Traditional machine learning model**
   - **Logistic Regression**
 - **Sequence models**
-  - **RNN** (simple recurrent network, called `RNN` in code)
-  - **GRU** (implemented in the GRU notebook)
+  - **RNN** (simple recurrent network, implemented in `src/experiment.py`)
+  - **LSTM** (implemented in `notebook/LSTM.ipynb`)
+  - **GRU** (implemented in `notebook/GRU_Text_Classification_Complete_FULL.ipynb`)
 
 Each model is evaluated with multiple embeddings :
 
@@ -167,7 +168,7 @@ Each team member is responsible for **one model architecture**, but the code is 
 
 ### RNN (simple recurrent network)
 
-- **Code**: `src/experiment.py` and `notebook/LSTM.ipynb`
+- **Code**: `src/experiment.py`
 - **Embeddings**:
   - TF‑IDF + SVD
   - Word2Vec Skip‑gram
@@ -182,6 +183,17 @@ Each team member is responsible for **one model architecture**, but the code is 
   - `model_comparison_results.csv` — RNN comparison table across embeddings.
   - `classification_report_*.txt` — detailed per‑class metrics.
   - `visual/` — confusion matrices, training curves, model comparison plots.
+
+### LSTM (notebook‑based sequence model)
+
+- **Code**: `notebook/LSTM.ipynb`
+- **Purpose**:
+  - Provides an additional LSTM‑based sequence model on the same dataset for exploratory comparison.
+  - Reuses the shared preprocessing and label mapping.
+- **Embeddings**:
+  - Uses the same family of embeddings (e.g. TF‑IDF or Word2Vec variants) as the main RNN experiments, but orchestrated interactively in the notebook.
+- **Outputs**:
+  - Plots and metrics are generated within the notebook; key findings are summarized in the PDF report alongside the scripted RNN/GRU/LogReg results.
 
 ### GRU (sequence model)
 
