@@ -1,0 +1,4 @@
+Model,Embedding,Accuracy,Macro_F1,Weighted_F1
+RNN,TF-IDF + SVD,0.732,0.626,0.721
+RNN,Word2Vec Skip-gram,0.814,0.725,0.805
+RNN,Word2Vec CBOW,0.784,0.687,0.773
