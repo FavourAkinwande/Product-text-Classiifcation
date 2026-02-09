@@ -280,20 +280,35 @@ This mirrors the RNN setup with GRU layers and writes outputs under `results/GRU
 
 ## Results & Comparative Analysis (Phase 3)
 
-Key comparison files used in the report:
+### Performance Summary
+
+**Best Model-Embedding Combinations**:
+- **GRU + Skip-gram**: Accuracy 0.888, Macro F1 0.843 (highest overall performance)
+- **Logistic Regression + TF-IDF**: Accuracy 0.867, Macro F1 0.836 (best for linear models)
+- **RNN + Skip-gram**: Accuracy 0.814, Macro F1 0.725 (best RNN configuration)
+
+**Key Findings**:
+- Sequence models (RNN, GRU) perform best with Word2Vec Skip-gram embeddings
+- Logistic Regression excels with TF-IDF features
+- GRU outperforms simple RNN due to better handling of long-range dependencies
+- Semantic similarity between categories (e.g., Beauty ↔ Bath & Body) causes consistent confusion across all models
+- Rare classes (< 100 samples) show severe performance degradation
+
+### Key Comparison Files
 
 - **Per‑model comparison tables**
   - `results/RNN/model_comparison_results.csv`
   - `results/GRU/model_comparison_results.csv`
   - `results/LogisticRegression/model_comparison_results.csv`
 - **Hyperparameter table (RNN)**
-  - `results/RNN/hyperparameter_runs.csv` — all configs with validation macro‑F1.
-- **Per‑embedding diagnostics**
-  - `classification_report_*.txt` — per‑class precision, recall, macro/weighted F1.
+  - `results/RNN/hyperparameter_runs.csv` — all configs with validation macro‑F1
+- **Confusion matrices**
   - Confusion matrix CSVs and PNGs in:
     - `results/RNN/visual/`
     - `results/GRU/visual_graphs/`
     - `results/LogisticRegression/visual_graphs/`
+- **Per‑embedding diagnostics**
+  - `classification_report_*.txt` — per‑class precision, recall, macro/weighted F1
 
 ---
 
@@ -315,5 +330,6 @@ Reproducibility measures:
 - Fixed random seeds where possible.
 - Stratified splits with metadata saved to disk.
 - Clear separation between preprocessing and model‑specific scripts.
+- Complete hyperparameter logs and experimental metadata saved for all runs.
 
 ---
